@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Infos Tenerife</title>
+<title>Cook Tenerife</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -347,7 +347,7 @@ footer{padding:64px 0 40px;border-top:1px solid var(--edge);margin-top:40px}
     </g>
   </svg>
   <div class="shell hero-in">
-    <p class="eyebrow">Infos</p>
+    <h1>Cook</h1>
     <h1>Tenerife</h1>
     <p class="hero-sub">Choisissez vos options ci-dessous — <strong>le total se calcule tout seul</strong> en bas de l'écran.</p>
   </div>
@@ -405,6 +405,7 @@ footer{padding:64px 0 40px;border-top:1px solid var(--edge);margin-top:40px}
         <p class="kicker">Vol Transavia</p>
         <p class="route">TFS <span>→</span> ORY</p>
         <p class="time">2h05 &mdash; 7h10</p>
+        <p class="price">84 <small>euros</small></p>
         <a class="btn" href="https://www.google.com/travel/flights/booking?tfs=CBwQAhpLEgoyMDI2LTA5LTA3IiAKA1RGUxIKMjAyNi0wOS0wNxoDT1JZKgJUTzIENDc0MWoNCAMSCS9tLzAxbnFiMXIMCAMSCC9tLzA1cXRqQAFIAXABggELCP___________wGYAQI&amp;tfu=CmxDalJJWVU1QmEybEpTazFyYjFsQlFtbDZlbEZDUnkwdExTMHRMUzB0TFMxM1ptTjFORUZCUVVGQlIzQnllbEJuUldGSGIwZEJFZ1pVVHpRM05ERWFDZ2p3UnhBQ0dnTkZWVkk0SEhEc1VnPT0SAggAIgMKATA&amp;hl=fr&amp;gl=FR" target="_blank" rel="noopener">Vol retour
           <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8.22 2.97a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06l2.97-2.97H2.75a.75.75 0 0 1 0-1.5h8.44L8.22 4.03a.75.75 0 0 1 0-1.06Z"/></svg>
         </a>
@@ -416,7 +417,7 @@ footer{padding:64px 0 40px;border-top:1px solid var(--edge);margin-top:40px}
   <!-- VOITURE -->
   <section id="voiture">
     <div class="sec-head"><h2>Location voiture</h2><div class="rule"></div></div>
-    <p class="sec-hint">157 € au total pour tout le séjour, soit 52 € / personne &mdash; à répartir entre tous, quelle que soit la voiture</p>
+    <p class="sec-hint">Prix pour tout le séjour, à répartir entre tous les 3</p>
     <div class="grid g2" data-group="voiture">
 
       <article class="card selectable" data-price="157" data-label="Location — Citroën C3 (manuelle)">
@@ -428,12 +429,12 @@ footer{padding:64px 0 40px;border-top:1px solid var(--edge);margin-top:40px}
         <button class="btn pick" type="button">Choisir</button>
       </article>
 
-      <article class="card selectable" data-price="157" data-label="Location — Seat Ibiza (automatique)">
+      <article class="card selectable" data-price="167" data-label="Location — Seat Ibiza (automatique)">
         <div class="check"><svg width="13" height="13" viewBox="0 0 16 16"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.75.75 0 0 1 1.06-1.06L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/></svg></div>
         <div class="car-photo"><img src="assets/seat-ibiza.png" alt="Seat Ibiza 5P A/C, rouge"></div>
         <p class="opt-label">La voiture automatique</p>
         <p class="opt-sub">Seat Ibiza &middot; 5 places &middot; climatisation</p>
-        <p class="price">157 <small>euros &middot; 52 €/pers.</small></p>
+        <p class="price">167 <small>euros &middot; 56 €/pers.</small></p>
         <button class="btn pick" type="button">Choisir</button>
       </article>
 
@@ -526,7 +527,7 @@ footer{padding:64px 0 40px;border-top:1px solid var(--edge);margin-top:40px}
 
 <footer>
   <div class="shell foot">
-    <span>Infos Tenerife</span>
+    <span>Cook Tenerife</span>
     <span>Islas Canarias &middot; 28°16′N 16°36′W</span>
   </div>
 </footer>
@@ -555,24 +556,34 @@ footer{padding:64px 0 40px;border-top:1px solid var(--edge);margin-top:40px}
 <script>
 (function(){
   var PEOPLE = 3;
+  var RETOUR_PRICE = 84; // fixe, par personne — pas de sélection possible
   var cards = document.querySelectorAll('.card.selectable');
   var totalAllEl = document.getElementById('total-all');
   var totalPpEl  = document.getElementById('total-pp');
 
   function recalc(){
-    var total = 0;
+    var perPerson = RETOUR_PRICE;
     var groupsFilled = {aller:false, voiture:false, logement:false};
 
     cards.forEach(function(card){
-      if(card.classList.contains('selected')){
-        total += parseFloat(card.dataset.price || 0);
-        var group = card.closest('[data-group]');
-        if(group) groupsFilled[group.dataset.group] = true;
+      if(!card.classList.contains('selected')) return;
+      var price = parseFloat(card.dataset.price || 0);
+      var group = card.closest('[data-group]');
+      var groupName = group ? group.dataset.group : null;
+
+      if(groupName === 'voiture' || groupName === 'logement'){
+        perPerson += price / PEOPLE; // prix total à répartir entre tous
+      } else {
+        perPerson += price; // vol aller ou balade à cheval : déjà par personne
       }
+
+      if(groupName) groupsFilled[groupName] = true;
     });
 
-    totalAllEl.textContent = total.toLocaleString('fr-FR') + ' €';
-    totalPpEl.textContent = Math.round(total / PEOPLE).toLocaleString('fr-FR') + ' €';
+    var total = perPerson * PEOPLE;
+
+    totalAllEl.textContent = Math.round(total).toLocaleString('fr-FR') + ' €';
+    totalPpEl.textContent = Math.round(perPerson).toLocaleString('fr-FR') + ' €';
 
     Object.keys(groupsFilled).forEach(function(g){
       var dot = document.querySelector('.dot[data-dot="'+g+'"]');
