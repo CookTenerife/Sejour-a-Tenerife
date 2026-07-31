@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Infos Tenerife</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --basalt:#0E1116;
+  --rock:#161B22;
+  --rock-hi:#1C232C;
+  --edge:#252E39;
+  --foam:#ECF2F1;
+  --ash:#8A97A2;
+  --sea:#19C2B0;
+  --sea-deep:#0E8478;
+  --sun:#FFC93C;
+  --radius:18px;
+  --ease:cubic-bezier(.2,.7,.3,1);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+html{scroll-behavior:smooth;scroll-padding-top:88px}
+
+body{
+  background:var(--basalt);
+  color:var(--foam);
+  font-family:"DM Sans",system-ui,sans-serif;
+  font-size:17px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+.shell{max-width:1080px;margin:0 auto;padding:0 24px}
+
+/* ══ HERO ══ */
+.hero{position:relative;padding:104px 0 72px;overflow:hidden}
+
+.topo{
+  position:absolute;
+  top:50%;left:50%;
+  width:1500px;height:1500px;
+  transform:translate(-50%,-58%);
+  pointer-events:none;
+  z-index:0;
+}
+.topo path{fill:none;stroke:var(--sea);stroke-width:1.1}
+
+.hero-glow{
+  position:absolute;top:-20%;left:50%;
+  width:820px;height:620px;transform:translateX(-50%);
+  background:radial-gradient(ellipse at center,rgba(25,194,176,.16),transparent 68%);
+  pointer-events:none;z-index:0;
+}
+
+.hero-in{position:relative;z-index:1}
+
+.eyebrow{
+  font-family:"JetBrains Mono",monospace;
+  font-size:12px;font-weight:700;
+  letter-spacing:.34em;text-transform:uppercase;
+  color:var(--sea);
+  margin-bottom:20px;
+}
+
+h1{
+  font-family:"Bricolage Grotesque",sans-serif;
+  font-weight:800;
+  font-size:clamp(4rem,17vw,11.5rem);
+  line-height:.82;
+  letter-spacing:-.045em;
+  background:linear-gradient(168deg,var(--foam) 20%,var(--sea) 130%);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+/* ══ NAV ══ */
+.nav{
+  position:sticky;top:0;z-index:60;
+  background:rgba(14,17,22,.78);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--edge);
+}
+.nav-in{display:flex;gap:6px;overflow-x:auto;padding:12px 24px;max-width:1080px;margin:0 auto;scrollbar-width:none}
+.nav-in::-webkit-scrollbar{display:none}
+.nav a{
+  flex:none;
+  font-family:"JetBrains Mono",monospace;
+  font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ash);text-decoration:none;
+  padding:7px 14px;border-radius:99px;
+  transition:color .2s var(--ease),background .2s var(--ease);
+}
+.nav a:hover{color:var(--foam);background:var(--rock-hi)}
+
+/* ══ SECTIONS ══ */
+section{padding:76px 0}
+.sec-head{display:flex;align-items:baseline;gap:18px;margin-bottom:34px}
+h2{
+  font-family:"Bricolage Grotesque",sans-serif;
+  font-weight:600;font-size:clamp(1.9rem,4.4vw,2.9rem);
+  letter-spacing:-.025em;line-height:1.05;
+}
+.rule{flex:1;height:1px;background:linear-gradient(90deg,var(--edge),transparent)}
+
+/* ══ CARDS ══ */
+.grid{display:grid;gap:20px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+
+.card{
+  position:relative;
+  background:var(--rock);
+  border:1px solid var(--edge);
+  border-radius:var(--radius);
+  padding:30px;
+  display:flex;flex-direction:column;
+  transition:transform .35s var(--ease),border-color .35s var(--ease),background .35s var(--ease);
+}
+.card:hover{transform:translateY(-4px);border-color:var(--sea-deep);background:var(--rock-hi)}
+
+.card.feature{
+  border-color:rgba(255,201,60,.34);
+  background:linear-gradient(158deg,rgba(255,201,60,.07),transparent 52%),var(--rock);
+}
+.card.feature:hover{border-color:var(--sun)}
+
+.tag{
+  align-self:flex-start;
+  font-family:"JetBrains Mono",monospace;
+  font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--basalt);background:var(--sun);
+  padding:5px 11px;border-radius:99px;margin-bottom:18px;
+}
+
+.kicker{
+  font-family:"JetBrains Mono",monospace;
+  font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--sea);margin-bottom:12px;
+}
+
+h3{
+  font-family:"Bricolage Grotesque",sans-serif;
+  font-weight:600;font-size:1.4rem;line-height:1.2;
+  letter-spacing:-.015em;margin-bottom:14px;
+}
+
+.route{
+  font-family:"Bricolage Grotesque",sans-serif;
+  font-weight:600;font-size:2rem;letter-spacing:-.02em;
+  margin-bottom:6px;
+}
+.route span{color:var(--sea);padding:0 .12em}
+
+.time{font-family:"JetBrains Mono",monospace;font-size:15px;color:var(--ash);margin-bottom:22px}
+
+.price{
+  font-family:"Bricolage Grotesque",sans-serif;
+  font-weight:800;font-size:2.6rem;line-height:1;
+  letter-spacing:-.035em;margin-bottom:20px;
+}
+.price small{font-size:.9rem;font-weight:600;color:var(--ash);letter-spacing:0;margin-left:6px}
+
+.body{color:var(--ash);font-size:15.5px;margin-bottom:26px;flex:1}
+.body strong{color:var(--foam);font-weight:500}
+.body:empty{margin-bottom:8px}
+
+/* ══ BUTTONS ══ */
+.btn{
+  align-self:flex-start;
+  display:inline-flex;align-items:center;gap:9px;
+  font-family:"DM Sans",sans-serif;
+  font-size:14.5px;font-weight:700;
+  color:var(--basalt);background:var(--sea);
+  text-decoration:none;
+  padding:12px 22px;border-radius:99px;
+  transition:background .25s var(--ease),transform .25s var(--ease),box-shadow .25s var(--ease),color .25s var(--ease);
+}
+.btn:hover{background:var(--foam);transform:translateX(3px);box-shadow:0 8px 26px rgba(25,194,176,.2)}
+.btn svg{transition:transform .25s var(--ease)}
+.btn:hover svg{transform:translateX(3px)}
+
+.btn.ghost{
+  background:transparent;color:var(--foam);
+  border:1px solid var(--edge);
+  padding:11px 21px;
+}
+.btn.ghost:hover{background:var(--rock-hi);border-color:var(--sea);color:var(--sea);box-shadow:none}
+
+.btn.gold{background:var(--sun)}
+.btn.gold:hover{background:var(--foam);box-shadow:0 8px 26px rgba(255,201,60,.22)}
+
+a:focus-visible{outline:2px solid var(--sun);outline-offset:3px}
+
+/* ══ CAR ══ */
+.car{
+  display:grid;gap:36px;
+  grid-template-columns:minmax(240px,.85fr) 1.15fr;
+  align-items:center;
+  background:var(--rock);
+  border:1px solid var(--edge);
+  border-radius:var(--radius);
+  padding:44px;
+}
+.bignum{
+  font-family:"Bricolage Grotesque",sans-serif;
+  font-weight:800;font-size:clamp(3.4rem,8vw,5.2rem);
+  line-height:.9;letter-spacing:-.045em;
+  color:var(--sea);
+}
+.bignum em{display:block;font-style:normal;font-size:1rem;font-weight:500;letter-spacing:0;color:var(--ash);margin-top:14px;line-height:1.5}
+
+.notes{list-style:none;display:flex;flex-direction:column;gap:14px;margin-bottom:28px}
+.notes li{display:flex;gap:13px;align-items:flex-start;color:var(--ash);font-size:15.5px}
+.notes li::before{content:"";flex:none;width:6px;height:6px;border-radius:50%;background:var(--sea);margin-top:10px}
+
+/* ══ FOOT ══ */
+footer{padding:64px 0 88px;border-top:1px solid var(--edge);margin-top:40px}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;color:var(--ash);font-family:"JetBrains Mono",monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase}
+
+@media(max-width:760px){
+  body{font-size:16px}
+  .shell{padding:0 18px}
+  .nav-in{padding:11px 18px}
+  .hero{padding:64px 0 44px}
+  section{padding:52px 0}
+  .car{grid-template-columns:1fr;padding:30px;gap:26px}
+  .card{padding:24px}
+  .route{font-size:1.65rem}
+}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-glow"></div>
+  <svg class="topo" viewBox="0 0 800 800" aria-hidden="true">
+    <g transform="translate(400 400)">
+      <path d="M0-300C118-300 232-232 268-118 300-14 262 118 158 208 62 292-78 300-172 226-268 150-300 8-250-104-202-212-100-300 0-300Z" opacity=".07"/>
+      <path d="M0-260C102-260 200-200 232-102 260-12 226 102 136 180 54 252-68 260-149 196-232 130-260 7-217-90-175-184-86-260 0-260Z" opacity=".09" transform="translate(6 8)"/>
+      <path d="M0-215C84-215 166-166 192-84 215-10 187 84 112 149 44 208-56 215-123 162-192 108-215 6-179-74-144-152-71-215 0-215Z" opacity=".12" transform="translate(14 18)"/>
+      <path d="M0-170C67-170 131-131 152-66 170-8 148 66 89 118 35 164-44 170-97 128-152 85-170 5-142-58-114-120-56-170 0-170Z" opacity=".15" transform="translate(24 30)"/>
+      <path d="M0-126C50-126 97-97 113-49 126-6 110 49 66 87 26 121-33 126-72 95-113 63-126 4-105-43-84-89-42-126 0-126Z" opacity=".2" transform="translate(32 42)"/>
+      <path d="M0-84C33-84 65-65 75-33 84-4 73 33 44 58 17 81-22 84-48 63-75 42-84 3-70-29-56-59-28-84 0-84Z" opacity=".26" transform="translate(40 54)"/>
+      <path d="M0-44C17-44 34-34 39-17 44-2 38 17 23 30 9 42-11 44-25 33-39 22-44 2-37-15-29-31-15-44 0-44Z" opacity=".34" transform="translate(46 64)"/>
+    </g>
+  </svg>
+  <div class="shell hero-in">
+    <p class="eyebrow">Infos</p>
+    <h1>Tenerife</h1>
+  </div>
+</header>
+
+<nav class="nav">
+  <div class="nav-in">
+    <a href="#aller">Aller</a>
+    <a href="#retour">Retour</a>
+    <a href="#voiture">Location voiture</a>
+    <a href="#logement">Logement</a>
+    <a href="#cheval">Balades à cheval</a>
+  </div>
+</nav>
+
+<main class="shell">
+
+  <section id="aller">
+    <div class="sec-head"><h2>Aller</h2><div class="rule"></div></div>
+    <div class="grid g2">
+
+      <article class="card">
+        <p class="kicker">Vol Ryanair</p>
+        <p class="route">BVA <span>→</span> TFS</p>
+        <p class="price">26 <small>euros</small></p>
+        <a class="btn" href="https://www.google.com/travel/flights/booking?tfs=CBwQAhpLEgoyMDI2LTA4LTI3IiAKA0JWQRIKMjAyNi0wOC0yNxoDVEZTKgJGUjIEOTc5MGoMCAISCC9tLzA1cXRqcg0IAxIJL20vMDFucWIxQAFIAXABggELCP___________wGYAQI&amp;tfu=CmxDalJJZURoUFVFcERjbkpSYVZsQlFXZEJaWGRDUnkwdExTMHRMUzB0ZDJKaWFIY3hPRUZCUVVGQlIzQnlla2x2U0ZKMlJWZEJFZ1pHVWprM09UQWFDZ2l6RlJBQ0dnTkZWVkk0SEhEVkdBPT0SAggAIgMKATA&amp;hl=fr&amp;gl=FR" target="_blank" rel="noopener">vol aller 1
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8.22 2.97a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06l2.97-2.97H2.75a.75.75 0 0 1 0-1.5h8.44L8.22 4.03a.75.75 0 0 1 0-1.06Z"/></svg>
+        </a>
+      </article>
+
+      <article class="card">
+        <p class="kicker">Vol Transavia</p>
+        <p class="route">ORY <span>→</span> TFS</p>
+        <p class="price">44 <small>euros</small></p>
+        <a class="btn" href="https://www.google.com/travel/flights/booking?tfs=CBwQAhpLEgoyMDI2LTA4LTI3IiAKA09SWRIKMjAyNi0wOC0yNxoDVEZTKgJUTzIENDczMGoMCAISCC9tLzA1cXRqcg0IAxIJL20vMDFucWIxQAFIAXABggELCP___________wGYAQI&amp;tfu=CmxDalJJZDNWNmMyczBSazEyTjFWQlFYQTRPVUZDUnkwdExTMHRMUzB0TFhkaVltVnlNVUZCUVVGQlIzQnllbUpOVEZWbFdrOUJFZ1pVVHpRM016QWFDZ2pRS0JBQ0dnTkZWVkk0SEhEcUxnPT0SAggAIgA&amp;hl=fr&amp;gl=FR" target="_blank" rel="noopener">vol aller 2
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8.22 2.97a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06l2.97-2.97H2.75a.75.75 0 0 1 0-1.5h8.44L8.22 4.03a.75.75 0 0 1 0-1.06Z"/></svg>
+        </a>
+      </article>
+
+    </div>
+  </section>
+
+  <section id="retour">
+    <div class="sec-head"><h2>Retour</h2><div class="rule"></div></div>
+    <div class="grid g2">
+      <article class="card">
+        <p class="kicker">Vol Transavia</p>
+        <p class="route">TFS <span>→</span> ORY</p>
+        <p class="time">2h05 &mdash; 7h10</p>
+        <a class="btn" href="https://www.google.com/travel/flights/booking?tfs=CBwQAhpLEgoyMDI2LTA5LTA3IiAKA1RGUxIKMjAyNi0wOS0wNxoDT1JZKgJUTzIENDc0MWoNCAMSCS9tLzAxbnFiMXIMCAMSCC9tLzA1cXRqQAFIAXABggELCP___________wGYAQI&amp;tfu=CmxDalJJWVU1QmEybEpTazFyYjFsQlFtbDZlbEZDUnkwdExTMHRMUzB0TFMxM1ptTjFORUZCUVVGQlIzQnllbEJuUldGSGIwZEJFZ1pVVHpRM05ERWFDZ2p3UnhBQ0dnTkZWVkk0SEhEc1VnPT0SAggAIgMKATA&amp;hl=fr&amp;gl=FR" target="_blank" rel="noopener">Vol retour
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8.22 2.97a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06l2.97-2.97H2.75a.75.75 0 0 1 0-1.5h8.44L8.22 4.03a.75.75 0 0 1 0-1.06Z"/></svg>
+        </a>
+      </article>
+      <div></div>
+    </div>
+  </section>
+
+  <section id="voiture">
+    <div class="sec-head"><h2>Location voiture</h2><div class="rule"></div></div>
+    <div class="car">
+      <div>
+        <p class="bignum">157 €
+          <em>157 euros, 52 euros par personne pour tout le séjour.</em>
+        </p>
+      </div>
+      <div>
+        <ul class="notes">
+          <li>23 ans minimum Anna conductrice</li>
+          <li>5 euros/personne/jour &rarr; moins cher que le bus</li>
+        </ul>
+        <a class="btn" href="https://www.autoreisen.com/LocationDeVoitures/reservation-P2.php" target="_blank" rel="noopener">Autoreisen
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8.22 2.97a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06l2.97-2.97H2.75a.75.75 0 0 1 0-1.5h8.44L8.22 4.03a.75.75 0 0 1 0-1.06Z"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="logement">
+    <div class="sec-head"><h2>Logement</h2><div class="rule"></div></div>
+    <div class="grid g3">
+
+      <article class="card feature">
+        <span class="tag">1er choix</span>
+        <h3>nouveau airbnb du harr</h3>
+        <p class="price">490 <small>euros</small></p>
+        <p class="body">pas d'avis nouvel air bnb, 15-20 minutes à pied de bars cools, à 45 minutes à pied de la playa de las americas ou y'a <strong>TOUTES</strong> les boites intéressantes et pas chères. Piscine + Clim, en vrai il est littéralement parfait. Claude m'a dit que c'est top et très safe et qu'on devrait le prendre.</p>
+        <a class="btn gold" href="https://www.booking.com/hotel/es/bouganvillas-color-dream-2-apartman.fr.html?label=la-calavera-guesthouse-TilM_hZKsvsShZbsbwT80wS284963043795%3Apl%3Ata%3Ap1%3Ap2%3Aac%3Aap%3Aneg%3Afi%3Atikwd-2371019851188%3Alp9056462%3Ali%3Adec%3Adm%3Appccp%3DUmFuZG9tSVYkc2RlIyh9YWiN3YY6Tdistu3PpCLSviE&amp;sid=ba81683b23f9322910286fee5a92f60e&amp;aid=311089&amp;ucfs=1&amp;checkin=2026-08-27&amp;checkout=2026-09-06&amp;dest_id=777&amp;dest_type=region&amp;group_adults=3&amp;no_rooms=2&amp;group_children=0&amp;nflt=price%3DEUR-min-70-1%3Broomfacility%3D11&amp;srpvid=11f79e49cd2a01e0&amp;srepoch=1785450707&amp;matching_block_id=1699011201_441548799_3_0_0&amp;atlas_src=sr_iw_title#map_closed" target="_blank" rel="noopener">Voir l'annonce
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8.22 2.97a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06l2.97-2.97H2.75a.75.75 0 0 1 0-1.5h8.44L8.22 4.03a.75.75 0 0 1 0-1.06Z"/></svg>
+        </a>
+      </article>
+
+      <article class="card">
+        <p class="kicker">Puerto de la Cruz</p>
+        <h3>appartements la carabela</h3>
+        <p class="price">567 <small>euros</small></p>
+        <p class="body">ambiance plus locale et moins chère là-bas.</p>
+        <a class="btn ghost" href="https://www.booking.com/hotel/es/apartamentos-la-carabela.fr.html?label=la-calavera-guesthouse-TilM_hZKsvsShZbsbwT80wS284963043795%3Apl%3Ata%3Ap1%3Ap2%3Aac%3Aap%3Aneg%3Afi%3Atikwd-2371019851188%3Alp9056462%3Ali%3Adec%3Adm%3Appccp%3DUmFuZG9tSVYkc2RlIyh9YWiN3YY6Tdistu3PpCLSviE&amp;sid=ba81683b23f9322910286fee5a92f60e&amp;aid=311089&amp;ucfs=1&amp;checkin=2026-08-27&amp;checkout=2026-09-06&amp;dest_id=-397851&amp;dest_type=city&amp;group_adults=3&amp;no_rooms=1&amp;group_children=0&amp;nflt=price%3DEUR-min-70-1&amp;srpvid=b72aa271d46e003c&amp;srepoch=1785453331&amp;matching_block_id=18933303_388222670_0_42_0&amp;atlas_src=sr_iw_title#tab-main" target="_blank" rel="noopener">Voir l'annonce
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8.22 2.97a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06l2.97-2.97H2.75a.75.75 0 0 1 0-1.5h8.44L8.22 4.03a.75.75 0 0 1 0-1.06Z"/></svg>
+        </a>
+      </article>
+
+      <article class="card">
+        <p class="kicker">Bord de mer</p>
+        <h3>appartement cool à la mer</h3>
+        <p class="price">370 <small>euros</small></p>
+        <p class="body">mais pas de bars ou de discothèques.</p>
+        <a class="btn ghost" href="https://www.booking.com/hotel/es/ek-el-risco-candelaria-b.fr.html?label=la-calavera-guesthouse-TilM_hZKsvsShZbsbwT80wS284963043795%3Apl%3Ata%3Ap1%3Ap2%3Aac%3Aap%3Aneg%3Afi%3Atikwd-2371019851188%3Alp9056462%3Ali%3Adec%3Adm%3Appccp%3DUmFuZG9tSVYkc2RlIyh9YWiN3YY6Tdistu3PpCLSviE&amp;sid=ba81683b23f9322910286fee5a92f60e&amp;aid=311089&amp;ucfs=1&amp;checkin=2026-08-27&amp;checkout=2026-09-06&amp;dest_id=777&amp;dest_type=region&amp;group_adults=3&amp;no_rooms=1&amp;group_children=0&amp;nflt=price%3DEUR-min-60-1&amp;srpvid=af82a7ee31fc00a1&amp;srepoch=1785456083&amp;matching_block_id=1257220401_420240068_4_0_0_1188775&amp;atlas_src=sr_iw_title" target="_blank" rel="noopener">Voir l'annonce
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8.22 2.97a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06l2.97-2.97H2.75a.75.75 0 0 1 0-1.5h8.44L8.22 4.03a.75.75 0 0 1 0-1.06Z"/></svg>
+        </a>
+      </article>
+
+      <article class="card">
+        <p class="kicker">Insolite</p>
+        <h3>LA YOURTE</h3>
+        <p class="body"></p>
+        <a class="btn ghost" href="https://www.booking.com/hotel/es/yurta-de-arico.fr.html?label=la-calavera-guesthouse-TilM_hZKsvsShZbsbwT80wS284963043795%3Apl%3Ata%3Ap1%3Ap2%3Aac%3Aap%3Aneg%3Afi%3Atikwd-2371019851188%3Alp9056462%3Ali%3Adec%3Adm%3Appccp%3DUmFuZG9tSVYkc2RlIyh9YWiN3YY6Tdistu3PpCLSviE&amp;sid=ba81683b23f9322910286fee5a92f60e&amp;aid=311089&amp;ucfs=1&amp;checkin=2026-08-27&amp;checkout=2026-09-06&amp;dest_id=777&amp;dest_type=region&amp;group_adults=3&amp;no_rooms=1&amp;group_children=0&amp;nflt=price%3DEUR-min-60-1&amp;srpvid=af82a7ee31fc00a1&amp;srepoch=1785455999&amp;matching_block_id=481210901_329163018_3_0_0&amp;atlas_src=sr_iw_title&amp;activeTab=photosGallery" target="_blank" rel="noopener">Voir l'annonce
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8.22 2.97a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06l2.97-2.97H2.75a.75.75 0 0 1 0-1.5h8.44L8.22 4.03a.75.75 0 0 1 0-1.06Z"/></svg>
+        </a>
+      </article>
+
+    </div>
+  </section>
+
+  <section id="cheval">
+    <div class="sec-head"><h2>Balades à cheval</h2><div class="rule"></div></div>
+    <div class="grid g2">
+      <article class="card">
+        <p class="kicker">Rancho Bonanza</p>
+        <h3>Parcours et tarifs</h3>
+        <p class="body"></p>
+        <a class="btn" href="https://www.ranchobonanza.es/english-1/routes-and-prices/" target="_blank" rel="noopener">Voir les parcours
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8.22 2.97a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06l2.97-2.97H2.75a.75.75 0 0 1 0-1.5h8.44L8.22 4.03a.75.75 0 0 1 0-1.06Z"/></svg>
+        </a>
+      </article>
+      <div></div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="shell foot">
+    <span>Infos Tenerife</span>
+    <span>Islas Canarias &middot; 28°16′N 16°36′W</span>
+  </div>
+</footer>
+
+</body>
+</html>
