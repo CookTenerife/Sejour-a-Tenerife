@@ -34,6 +34,7 @@ body{
   line-height:1.6;
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
+  padding-bottom:96px; /* room for summary bar */
 }
 
 .shell{max-width:1080px;margin:0 auto;padding:0 24px}
@@ -79,6 +80,14 @@ h1{
   -webkit-text-fill-color:transparent;
 }
 
+.hero-sub{
+  margin-top:24px;
+  max-width:520px;
+  color:var(--ash);
+  font-size:16px;
+}
+.hero-sub strong{color:var(--foam);font-weight:600}
+
 /* ══ NAV ══ */
 .nav{
   position:sticky;top:0;z-index:60;
@@ -101,13 +110,18 @@ h1{
 
 /* ══ SECTIONS ══ */
 section{padding:76px 0}
-.sec-head{display:flex;align-items:baseline;gap:18px;margin-bottom:34px}
+.sec-head{display:flex;align-items:baseline;gap:18px;margin-bottom:10px;flex-wrap:wrap}
 h2{
   font-family:"Bricolage Grotesque",sans-serif;
   font-weight:600;font-size:clamp(1.9rem,4.4vw,2.9rem);
   letter-spacing:-.025em;line-height:1.05;
 }
-.rule{flex:1;height:1px;background:linear-gradient(90deg,var(--edge),transparent)}
+.rule{flex:1;height:1px;background:linear-gradient(90deg,var(--edge),transparent);min-width:40px}
+.sec-hint{
+  font-family:"JetBrains Mono",monospace;
+  font-size:11.5px;letter-spacing:.08em;color:var(--ash);
+  margin-bottom:30px;
+}
 
 /* ══ CARDS ══ */
 .grid{display:grid;gap:20px}
@@ -121,7 +135,7 @@ h2{
   border-radius:var(--radius);
   padding:30px;
   display:flex;flex-direction:column;
-  transition:transform .35s var(--ease),border-color .35s var(--ease),background .35s var(--ease);
+  transition:transform .35s var(--ease),border-color .35s var(--ease),background .35s var(--ease),box-shadow .35s var(--ease);
 }
 .card:hover{transform:translateY(-4px);border-color:var(--sea-deep);background:var(--rock-hi)}
 
@@ -130,6 +144,31 @@ h2{
   background:linear-gradient(158deg,rgba(255,201,60,.07),transparent 52%),var(--rock);
 }
 .card.feature:hover{border-color:var(--sun)}
+
+/* selectable state */
+.card.selectable{cursor:default}
+.card.selected{
+  border-color:var(--sea);
+  box-shadow:0 0 0 1px var(--sea), 0 14px 34px rgba(25,194,176,.16);
+  background:linear-gradient(158deg,rgba(25,194,176,.09),transparent 55%),var(--rock);
+}
+.card.feature.selected{
+  border-color:var(--sun);
+  box-shadow:0 0 0 1px var(--sun), 0 14px 34px rgba(255,201,60,.16);
+}
+
+.check{
+  position:absolute;top:24px;right:24px;
+  width:26px;height:26px;border-radius:50%;
+  border:1.5px solid var(--edge);
+  background:var(--basalt);
+  display:flex;align-items:center;justify-content:center;
+  transition:all .25s var(--ease);
+}
+.check svg{opacity:0;transform:scale(.5);transition:all .25s var(--ease);fill:var(--basalt)}
+.card.selected .check{background:var(--sea);border-color:var(--sea)}
+.card.selected .check svg{opacity:1;transform:scale(1)}
+.card.feature.selected .check{background:var(--sun);border-color:var(--sun)}
 
 .tag{
   align-self:flex-start;
@@ -171,6 +210,17 @@ h3{
 .body strong{color:var(--foam);font-weight:500}
 .body:empty{margin-bottom:8px}
 
+.car-photo{
+  width:100%;
+  aspect-ratio:16/10;
+  border-radius:12px;
+  background:#fff;
+  margin-bottom:20px;
+  overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+}
+.car-photo img{width:100%;height:100%;object-fit:contain;padding:10px}
+
 /* ══ BUTTONS ══ */
 .btn{
   align-self:flex-start;
@@ -180,7 +230,9 @@ h3{
   color:var(--basalt);background:var(--sea);
   text-decoration:none;
   padding:12px 22px;border-radius:99px;
-  transition:background .25s var(--ease),transform .25s var(--ease),box-shadow .25s var(--ease),color .25s var(--ease);
+  transition:background .25s var(--ease),transform .25s var(--ease),box-shadow .25s var(--ease),color .25s var(--ease),border-color .25s var(--ease);
+  border:1px solid transparent;
+  cursor:pointer;
 }
 .btn:hover{background:var(--foam);transform:translateX(3px);box-shadow:0 8px 26px rgba(25,194,176,.2)}
 .btn svg{transition:transform .25s var(--ease)}
@@ -196,33 +248,69 @@ h3{
 .btn.gold{background:var(--sun)}
 .btn.gold:hover{background:var(--foam);box-shadow:0 8px 26px rgba(255,201,60,.22)}
 
-a:focus-visible{outline:2px solid var(--sun);outline-offset:3px}
-
-/* ══ CAR ══ */
-.car{
-  display:grid;gap:36px;
-  grid-template-columns:minmax(240px,.85fr) 1.15fr;
-  align-items:center;
-  background:var(--rock);
-  border:1px solid var(--edge);
-  border-radius:var(--radius);
-  padding:44px;
+.btn.pick{width:100%;justify-content:center;margin-top:auto}
+.btn.pick.is-selected{
+  background:var(--sea-deep);color:var(--foam);
+  transform:none;box-shadow:none;
 }
-.bignum{
+.btn.pick.is-selected:hover{background:var(--sea-deep);transform:none}
+.card.feature .btn.pick.is-selected{background:#B8862A}
+
+.btn.toggle-cheval.is-selected{background:var(--sea-deep);color:var(--foam)}
+
+a:focus-visible,button:focus-visible{outline:2px solid var(--sun);outline-offset:3px}
+
+/* ══ CAR RENTAL SECTION LABELS ══ */
+.opt-label{
   font-family:"Bricolage Grotesque",sans-serif;
-  font-weight:800;font-size:clamp(3.4rem,8vw,5.2rem);
-  line-height:.9;letter-spacing:-.045em;
-  color:var(--sea);
+  font-weight:600;font-size:1.55rem;letter-spacing:-.015em;margin-bottom:4px;
 }
-.bignum em{display:block;font-style:normal;font-size:1rem;font-weight:500;letter-spacing:0;color:var(--ash);margin-top:14px;line-height:1.5}
+.opt-sub{color:var(--ash);font-size:14.5px;margin-bottom:20px}
 
-.notes{list-style:none;display:flex;flex-direction:column;gap:14px;margin-bottom:28px}
-.notes li{display:flex;gap:13px;align-items:flex-start;color:var(--ash);font-size:15.5px}
-.notes li::before{content:"";flex:none;width:6px;height:6px;border-radius:50%;background:var(--sea);margin-top:10px}
+/* ══ CHEVAL (optional add-on) ══ */
+.addon-note{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:"JetBrains Mono",monospace;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--sun);margin-bottom:14px;
+}
+.addon-note::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--sun)}
 
 /* ══ FOOT ══ */
-footer{padding:64px 0 88px;border-top:1px solid var(--edge);margin-top:40px}
+footer{padding:64px 0 40px;border-top:1px solid var(--edge);margin-top:40px}
 .foot{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;color:var(--ash);font-family:"JetBrains Mono",monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase}
+
+/* ══ SUMMARY BAR ══ */
+.summary{
+  position:fixed;left:0;right:0;bottom:0;z-index:80;
+  background:rgba(14,17,22,.92);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border-top:1px solid var(--edge);
+  box-shadow:0 -14px 40px rgba(0,0,0,.35);
+}
+.summary-in{
+  max-width:1080px;margin:0 auto;padding:16px 24px;
+  display:flex;align-items:center;gap:24px;flex-wrap:wrap;
+}
+.summary-block{display:flex;flex-direction:column;gap:2px}
+.summary-label{
+  font-family:"JetBrains Mono",monospace;font-size:10px;font-weight:700;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--ash);
+}
+.summary-value{
+  font-family:"Bricolage Grotesque",sans-serif;font-weight:800;
+  font-size:1.7rem;letter-spacing:-.03em;color:var(--foam);
+}
+.summary-value.accent{color:var(--sea)}
+.summary-sep{width:1px;height:36px;background:var(--edge);flex:none}
+.summary-fill{flex:1}
+.summary-progress{
+  font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--ash);
+  display:flex;align-items:center;gap:8px;
+}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--edge);transition:background .25s var(--ease)}
+.dot.on{background:var(--sea)}
 
 @media(max-width:760px){
   body{font-size:16px}
@@ -230,9 +318,11 @@ footer{padding:64px 0 88px;border-top:1px solid var(--edge);margin-top:40px}
   .nav-in{padding:11px 18px}
   .hero{padding:64px 0 44px}
   section{padding:52px 0}
-  .car{grid-template-columns:1fr;padding:30px;gap:26px}
   .card{padding:24px}
   .route{font-size:1.65rem}
+  .summary-in{padding:14px 18px;gap:14px}
+  .summary-value{font-size:1.35rem}
+  .summary-progress{display:none}
 }
 
 @media(prefers-reduced-motion:reduce){
@@ -259,6 +349,7 @@ footer{padding:64px 0 88px;border-top:1px solid var(--edge);margin-top:40px}
   <div class="shell hero-in">
     <p class="eyebrow">Infos</p>
     <h1>Tenerife</h1>
+    <p class="hero-sub">Choisissez vos options ci-dessous — <strong>le total se calcule tout seul</strong> en bas de l'écran.</p>
   </div>
 </header>
 
@@ -274,24 +365,30 @@ footer{padding:64px 0 88px;border-top:1px solid var(--edge);margin-top:40px}
 
 <main class="shell">
 
+  <!-- ALLER -->
   <section id="aller">
     <div class="sec-head"><h2>Aller</h2><div class="rule"></div></div>
-    <div class="grid g2">
+    <p class="sec-hint">Un vol par personne à choisir &mdash; 27 août</p>
+    <div class="grid g2" data-group="aller">
 
-      <article class="card">
+      <article class="card selectable" data-price="26" data-label="Vol Ryanair BVA→TFS">
+        <div class="check"><svg width="13" height="13" viewBox="0 0 16 16"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.75.75 0 0 1 1.06-1.06L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/></svg></div>
         <p class="kicker">Vol Ryanair</p>
         <p class="route">BVA <span>→</span> TFS</p>
         <p class="price">26 <small>euros</small></p>
-        <a class="btn" href="https://www.google.com/travel/flights/booking?tfs=CBwQAhpLEgoyMDI2LTA4LTI3IiAKA0JWQRIKMjAyNi0wOC0yNxoDVEZTKgJGUjIEOTc5MGoMCAISCC9tLzA1cXRqcg0IAxIJL20vMDFucWIxQAFIAXABggELCP___________wGYAQI&amp;tfu=CmxDalJJZURoUFVFcERjbkpSYVZsQlFXZEJaWGRDUnkwdExTMHRMUzB0ZDJKaWFIY3hPRUZCUVVGQlIzQnlla2x2U0ZKMlJWZEJFZ1pHVWprM09UQWFDZ2l6RlJBQ0dnTkZWVkk0SEhEVkdBPT0SAggAIgMKATA&amp;hl=fr&amp;gl=FR" target="_blank" rel="noopener">vol aller 1
+        <button class="btn pick" type="button">Choisir</button>
+        <a class="btn ghost" style="margin-top:12px" href="https://www.google.com/travel/flights/booking?tfs=CBwQAhpLEgoyMDI2LTA4LTI3IiAKA0JWQRIKMjAyNi0wOC0yNxoDVEZTKgJGUjIEOTc5MGoMCAISCC9tLzA1cXRqcg0IAxIJL20vMDFucWIxQAFIAXABggELCP___________wGYAQI&amp;tfu=CmxDalJJZURoUFVFcERjbkpSYVZsQlFXZEJaWGRDUnkwdExTMHRMUzB0ZDJKaWFIY3hPRUZCUVVGQlIzQnlla2x2U0ZKMlJWZEJFZ1pHVWprM09UQWFDZ2l6RlJBQ0dnTkZWVkk0SEhEVkdBPT0SAggAIgMKATA&amp;hl=fr&amp;gl=FR" target="_blank" rel="noopener">Voir le vol
           <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8.22 2.97a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06l2.97-2.97H2.75a.75.75 0 0 1 0-1.5h8.44L8.22 4.03a.75.75 0 0 1 0-1.06Z"/></svg>
         </a>
       </article>
 
-      <article class="card">
+      <article class="card selectable" data-price="44" data-label="Vol Transavia ORY→TFS">
+        <div class="check"><svg width="13" height="13" viewBox="0 0 16 16"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.75.75 0 0 1 1.06-1.06L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/></svg></div>
         <p class="kicker">Vol Transavia</p>
         <p class="route">ORY <span>→</span> TFS</p>
         <p class="price">44 <small>euros</small></p>
-        <a class="btn" href="https://www.google.com/travel/flights/booking?tfs=CBwQAhpLEgoyMDI2LTA4LTI3IiAKA09SWRIKMjAyNi0wOC0yNxoDVEZTKgJUTzIENDczMGoMCAISCC9tLzA1cXRqcg0IAxIJL20vMDFucWIxQAFIAXABggELCP___________wGYAQI&amp;tfu=CmxDalJJZDNWNmMyczBSazEyTjFWQlFYQTRPVUZDUnkwdExTMHRMUzB0TFhkaVltVnlNVUZCUVVGQlIzQnllbUpOVEZWbFdrOUJFZ1pVVHpRM016QWFDZ2pRS0JBQ0dnTkZWVkk0SEhEcUxnPT0SAggAIgA&amp;hl=fr&amp;gl=FR" target="_blank" rel="noopener">vol aller 2
+        <button class="btn pick" type="button">Choisir</button>
+        <a class="btn ghost" style="margin-top:12px" href="https://www.google.com/travel/flights/booking?tfs=CBwQAhpLEgoyMDI2LTA4LTI3IiAKA09SWRIKMjAyNi0wOC0yNxoDVEZTKgJUTzIENDczMGoMCAISCC9tLzA1cXRqcg0IAxIJL20vMDFucWIxQAFIAXABggELCP___________wGYAQI&amp;tfu=CmxDalJJZDNWNmMyczBSazEyTjFWQlFYQTRPVUZDUnkwdExTMHRMUzB0TFhkaVltVnlNVUZCUVVGQlIzQnllbUpOVEZWbFdrOUJFZ1pVVHpRM016QWFDZ2pRS0JBQ0dnTkZWVkk0SEhEcUxnPT0SAggAIgA&amp;hl=fr&amp;gl=FR" target="_blank" rel="noopener">Voir le vol
           <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8.22 2.97a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06l2.97-2.97H2.75a.75.75 0 0 1 0-1.5h8.44L8.22 4.03a.75.75 0 0 1 0-1.06Z"/></svg>
         </a>
       </article>
@@ -299,8 +396,10 @@ footer{padding:64px 0 88px;border-top:1px solid var(--edge);margin-top:40px}
     </div>
   </section>
 
+  <!-- RETOUR -->
   <section id="retour">
     <div class="sec-head"><h2>Retour</h2><div class="rule"></div></div>
+    <p class="sec-hint">Un seul vol possible &mdash; rien à choisir</p>
     <div class="grid g2">
       <article class="card">
         <p class="kicker">Vol Transavia</p>
@@ -314,65 +413,87 @@ footer{padding:64px 0 88px;border-top:1px solid var(--edge);margin-top:40px}
     </div>
   </section>
 
+  <!-- VOITURE -->
   <section id="voiture">
     <div class="sec-head"><h2>Location voiture</h2><div class="rule"></div></div>
-    <div class="car">
-      <div>
-        <p class="bignum">157 €
-          <em>157 euros, 52 euros par personne pour tout le séjour.</em>
-        </p>
-      </div>
-      <div>
-        <ul class="notes">
-          <li>23 ans minimum Anna conductrice</li>
-          <li>5 euros/personne/jour &rarr; moins cher que le bus</li>
-        </ul>
-        <a class="btn" href="https://www.autoreisen.com/LocationDeVoitures/reservation-P2.php" target="_blank" rel="noopener">Autoreisen
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8.22 2.97a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06l2.97-2.97H2.75a.75.75 0 0 1 0-1.5h8.44L8.22 4.03a.75.75 0 0 1 0-1.06Z"/></svg>
-        </a>
-      </div>
+    <p class="sec-hint">157 € au total pour tout le séjour, soit 52 € / personne &mdash; à répartir entre tous, quelle que soit la voiture</p>
+    <div class="grid g2" data-group="voiture">
+
+      <article class="card selectable" data-price="157" data-label="Location — Citroën C3 (manuelle)">
+        <div class="check"><svg width="13" height="13" viewBox="0 0 16 16"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.75.75 0 0 1 1.06-1.06L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/></svg></div>
+        <div class="car-photo"><img src="assets/citroen-c3.png" alt="Citroën C3 5P A/C, rouge"></div>
+        <p class="opt-label">La voiture manuelle</p>
+        <p class="opt-sub">Citroën C3 &middot; 5 places &middot; climatisation</p>
+        <p class="price">157 <small>euros &middot; 52 €/pers.</small></p>
+        <button class="btn pick" type="button">Choisir</button>
+      </article>
+
+      <article class="card selectable" data-price="157" data-label="Location — Seat Ibiza (automatique)">
+        <div class="check"><svg width="13" height="13" viewBox="0 0 16 16"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.75.75 0 0 1 1.06-1.06L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/></svg></div>
+        <div class="car-photo"><img src="assets/seat-ibiza.png" alt="Seat Ibiza 5P A/C, rouge"></div>
+        <p class="opt-label">La voiture automatique</p>
+        <p class="opt-sub">Seat Ibiza &middot; 5 places &middot; climatisation</p>
+        <p class="price">157 <small>euros &middot; 52 €/pers.</small></p>
+        <button class="btn pick" type="button">Choisir</button>
+      </article>
+
     </div>
+    <p class="body" style="margin-top:20px;max-width:560px">23 ans minimum &mdash; Anna conductrice. 5 €/personne/jour, moins cher que le bus.</p>
+    <a class="btn ghost" href="https://www.autoreisen.com/LocationDeVoitures/reservation-P2.php" target="_blank" rel="noopener">Autoreisen
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8.22 2.97a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06l2.97-2.97H2.75a.75.75 0 0 1 0-1.5h8.44L8.22 4.03a.75.75 0 0 1 0-1.06Z"/></svg>
+    </a>
   </section>
 
+  <!-- LOGEMENT -->
   <section id="logement">
     <div class="sec-head"><h2>Logement</h2><div class="rule"></div></div>
-    <div class="grid g3">
+    <p class="sec-hint">Un logement à choisir pour les 10 nuits, 27 août &mdash; 6 septembre</p>
+    <div class="grid g3" data-group="logement">
 
-      <article class="card feature">
+      <article class="card feature selectable" data-price="490" data-label="Logement — nouveau airbnb du harr">
+        <div class="check"><svg width="13" height="13" viewBox="0 0 16 16"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.75.75 0 0 1 1.06-1.06L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/></svg></div>
         <span class="tag">1er choix</span>
         <h3>nouveau airbnb du harr</h3>
         <p class="price">490 <small>euros</small></p>
         <p class="body">pas d'avis nouvel air bnb, 15-20 minutes à pied de bars cools, à 45 minutes à pied de la playa de las americas ou y'a <strong>TOUTES</strong> les boites intéressantes et pas chères. Piscine + Clim, en vrai il est littéralement parfait. Claude m'a dit que c'est top et très safe et qu'on devrait le prendre.</p>
-        <a class="btn gold" href="https://www.booking.com/hotel/es/bouganvillas-color-dream-2-apartman.fr.html?label=la-calavera-guesthouse-TilM_hZKsvsShZbsbwT80wS284963043795%3Apl%3Ata%3Ap1%3Ap2%3Aac%3Aap%3Aneg%3Afi%3Atikwd-2371019851188%3Alp9056462%3Ali%3Adec%3Adm%3Appccp%3DUmFuZG9tSVYkc2RlIyh9YWiN3YY6Tdistu3PpCLSviE&amp;sid=ba81683b23f9322910286fee5a92f60e&amp;aid=311089&amp;ucfs=1&amp;checkin=2026-08-27&amp;checkout=2026-09-06&amp;dest_id=777&amp;dest_type=region&amp;group_adults=3&amp;no_rooms=2&amp;group_children=0&amp;nflt=price%3DEUR-min-70-1%3Broomfacility%3D11&amp;srpvid=11f79e49cd2a01e0&amp;srepoch=1785450707&amp;matching_block_id=1699011201_441548799_3_0_0&amp;atlas_src=sr_iw_title#map_closed" target="_blank" rel="noopener">Voir l'annonce
+        <button class="btn pick gold" type="button">Choisir</button>
+        <a class="btn ghost" style="margin-top:12px" href="https://www.booking.com/hotel/es/bouganvillas-color-dream-2-apartman.fr.html?label=la-calavera-guesthouse-TilM_hZKsvsShZbsbwT80wS284963043795%3Apl%3Ata%3Ap1%3Ap2%3Aac%3Aap%3Aneg%3Afi%3Atikwd-2371019851188%3Alp9056462%3Ali%3Adec%3Adm%3Appccp%3DUmFuZG9tSVYkc2RlIyh9YWiN3YY6Tdistu3PpCLSviE&amp;sid=ba81683b23f9322910286fee5a92f60e&amp;aid=311089&amp;ucfs=1&amp;checkin=2026-08-27&amp;checkout=2026-09-06&amp;dest_id=777&amp;dest_type=region&amp;group_adults=3&amp;no_rooms=2&amp;group_children=0&amp;nflt=price%3DEUR-min-70-1%3Broomfacility%3D11&amp;srpvid=11f79e49cd2a01e0&amp;srepoch=1785450707&amp;matching_block_id=1699011201_441548799_3_0_0&amp;atlas_src=sr_iw_title#map_closed" target="_blank" rel="noopener">Voir l'annonce
           <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8.22 2.97a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06l2.97-2.97H2.75a.75.75 0 0 1 0-1.5h8.44L8.22 4.03a.75.75 0 0 1 0-1.06Z"/></svg>
         </a>
       </article>
 
-      <article class="card">
+      <article class="card selectable" data-price="567" data-label="Logement — La Carabela">
+        <div class="check"><svg width="13" height="13" viewBox="0 0 16 16"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.75.75 0 0 1 1.06-1.06L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/></svg></div>
         <p class="kicker">Puerto de la Cruz</p>
         <h3>appartements la carabela</h3>
         <p class="price">567 <small>euros</small></p>
         <p class="body">ambiance plus locale et moins chère là-bas.</p>
-        <a class="btn ghost" href="https://www.booking.com/hotel/es/apartamentos-la-carabela.fr.html?label=la-calavera-guesthouse-TilM_hZKsvsShZbsbwT80wS284963043795%3Apl%3Ata%3Ap1%3Ap2%3Aac%3Aap%3Aneg%3Afi%3Atikwd-2371019851188%3Alp9056462%3Ali%3Adec%3Adm%3Appccp%3DUmFuZG9tSVYkc2RlIyh9YWiN3YY6Tdistu3PpCLSviE&amp;sid=ba81683b23f9322910286fee5a92f60e&amp;aid=311089&amp;ucfs=1&amp;checkin=2026-08-27&amp;checkout=2026-09-06&amp;dest_id=-397851&amp;dest_type=city&amp;group_adults=3&amp;no_rooms=1&amp;group_children=0&amp;nflt=price%3DEUR-min-70-1&amp;srpvid=b72aa271d46e003c&amp;srepoch=1785453331&amp;matching_block_id=18933303_388222670_0_42_0&amp;atlas_src=sr_iw_title#tab-main" target="_blank" rel="noopener">Voir l'annonce
+        <button class="btn pick" type="button">Choisir</button>
+        <a class="btn ghost" style="margin-top:12px" href="https://www.booking.com/hotel/es/apartamentos-la-carabela.fr.html?label=la-calavera-guesthouse-TilM_hZKsvsShZbsbwT80wS284963043795%3Apl%3Ata%3Ap1%3Ap2%3Aac%3Aap%3Aneg%3Afi%3Atikwd-2371019851188%3Alp9056462%3Ali%3Adec%3Adm%3Appccp%3DUmFuZG9tSVYkc2RlIyh9YWiN3YY6Tdistu3PpCLSviE&amp;sid=ba81683b23f9322910286fee5a92f60e&amp;aid=311089&amp;ucfs=1&amp;checkin=2026-08-27&amp;checkout=2026-09-06&amp;dest_id=-397851&amp;dest_type=city&amp;group_adults=3&amp;no_rooms=1&amp;group_children=0&amp;nflt=price%3DEUR-min-70-1&amp;srpvid=b72aa271d46e003c&amp;srepoch=1785453331&amp;matching_block_id=18933303_388222670_0_42_0&amp;atlas_src=sr_iw_title#tab-main" target="_blank" rel="noopener">Voir l'annonce
           <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8.22 2.97a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06l2.97-2.97H2.75a.75.75 0 0 1 0-1.5h8.44L8.22 4.03a.75.75 0 0 1 0-1.06Z"/></svg>
         </a>
       </article>
 
-      <article class="card">
+      <article class="card selectable" data-price="370" data-label="Logement — El Risco (Candelaria)">
+        <div class="check"><svg width="13" height="13" viewBox="0 0 16 16"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.75.75 0 0 1 1.06-1.06L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/></svg></div>
         <p class="kicker">Bord de mer</p>
         <h3>appartement cool à la mer</h3>
         <p class="price">370 <small>euros</small></p>
         <p class="body">mais pas de bars ou de discothèques.</p>
-        <a class="btn ghost" href="https://www.booking.com/hotel/es/ek-el-risco-candelaria-b.fr.html?label=la-calavera-guesthouse-TilM_hZKsvsShZbsbwT80wS284963043795%3Apl%3Ata%3Ap1%3Ap2%3Aac%3Aap%3Aneg%3Afi%3Atikwd-2371019851188%3Alp9056462%3Ali%3Adec%3Adm%3Appccp%3DUmFuZG9tSVYkc2RlIyh9YWiN3YY6Tdistu3PpCLSviE&amp;sid=ba81683b23f9322910286fee5a92f60e&amp;aid=311089&amp;ucfs=1&amp;checkin=2026-08-27&amp;checkout=2026-09-06&amp;dest_id=777&amp;dest_type=region&amp;group_adults=3&amp;no_rooms=1&amp;group_children=0&amp;nflt=price%3DEUR-min-60-1&amp;srpvid=af82a7ee31fc00a1&amp;srepoch=1785456083&amp;matching_block_id=1257220401_420240068_4_0_0_1188775&amp;atlas_src=sr_iw_title" target="_blank" rel="noopener">Voir l'annonce
+        <button class="btn pick" type="button">Choisir</button>
+        <a class="btn ghost" style="margin-top:12px" href="https://www.booking.com/hotel/es/ek-el-risco-candelaria-b.fr.html?label=la-calavera-guesthouse-TilM_hZKsvsShZbsbwT80wS284963043795%3Apl%3Ata%3Ap1%3Ap2%3Aac%3Aap%3Aneg%3Afi%3Atikwd-2371019851188%3Alp9056462%3Ali%3Adec%3Adm%3Appccp%3DUmFuZG9tSVYkc2RlIyh9YWiN3YY6Tdistu3PpCLSviE&amp;sid=ba81683b23f9322910286fee5a92f60e&amp;aid=311089&amp;ucfs=1&amp;checkin=2026-08-27&amp;checkout=2026-09-06&amp;dest_id=777&amp;dest_type=region&amp;group_adults=3&amp;no_rooms=1&amp;group_children=0&amp;nflt=price%3DEUR-min-60-1&amp;srpvid=af82a7ee31fc00a1&amp;srepoch=1785456083&amp;matching_block_id=1257220401_420240068_4_0_0_1188775&amp;atlas_src=sr_iw_title" target="_blank" rel="noopener">Voir l'annonce
           <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8.22 2.97a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06l2.97-2.97H2.75a.75.75 0 0 1 0-1.5h8.44L8.22 4.03a.75.75 0 0 1 0-1.06Z"/></svg>
         </a>
       </article>
 
-      <article class="card">
+      <article class="card selectable" data-price="493" data-label="Logement — La Yourte">
+        <div class="check"><svg width="13" height="13" viewBox="0 0 16 16"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.75.75 0 0 1 1.06-1.06L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/></svg></div>
         <p class="kicker">Insolite</p>
         <h3>LA YOURTE</h3>
+        <p class="price">493 <small>euros</small></p>
         <p class="body"></p>
-        <a class="btn ghost" href="https://www.booking.com/hotel/es/yurta-de-arico.fr.html?label=la-calavera-guesthouse-TilM_hZKsvsShZbsbwT80wS284963043795%3Apl%3Ata%3Ap1%3Ap2%3Aac%3Aap%3Aneg%3Afi%3Atikwd-2371019851188%3Alp9056462%3Ali%3Adec%3Adm%3Appccp%3DUmFuZG9tSVYkc2RlIyh9YWiN3YY6Tdistu3PpCLSviE&amp;sid=ba81683b23f9322910286fee5a92f60e&amp;aid=311089&amp;ucfs=1&amp;checkin=2026-08-27&amp;checkout=2026-09-06&amp;dest_id=777&amp;dest_type=region&amp;group_adults=3&amp;no_rooms=1&amp;group_children=0&amp;nflt=price%3DEUR-min-60-1&amp;srpvid=af82a7ee31fc00a1&amp;srepoch=1785455999&amp;matching_block_id=481210901_329163018_3_0_0&amp;atlas_src=sr_iw_title&amp;activeTab=photosGallery" target="_blank" rel="noopener">Voir l'annonce
+        <button class="btn pick" type="button">Choisir</button>
+        <a class="btn ghost" style="margin-top:12px" href="https://www.booking.com/hotel/es/yurta-de-arico.fr.html?label=la-calavera-guesthouse-TilM_hZKsvsShZbsbwT80wS284963043795%3Apl%3Ata%3Ap1%3Ap2%3Aac%3Aap%3Aneg%3Afi%3Atikwd-2371019851188%3Alp9056462%3Ali%3Adec%3Adm%3Appccp%3DUmFuZG9tSVYkc2RlIyh9YWiN3YY6Tdistu3PpCLSviE&amp;sid=ba81683b23f9322910286fee5a92f60e&amp;aid=311089&amp;ucfs=1&amp;checkin=2026-08-27&amp;checkout=2026-09-06&amp;dest_id=777&amp;dest_type=region&amp;group_adults=3&amp;no_rooms=1&amp;group_children=0&amp;nflt=price%3DEUR-min-60-1&amp;srpvid=af82a7ee31fc00a1&amp;srepoch=1785455999&amp;matching_block_id=481210901_329163018_3_0_0&amp;atlas_src=sr_iw_title&amp;activeTab=photosGallery" target="_blank" rel="noopener">Voir l'annonce
           <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8.22 2.97a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06l2.97-2.97H2.75a.75.75 0 0 1 0-1.5h8.44L8.22 4.03a.75.75 0 0 1 0-1.06Z"/></svg>
         </a>
       </article>
@@ -380,14 +501,20 @@ footer{padding:64px 0 88px;border-top:1px solid var(--edge);margin-top:40px}
     </div>
   </section>
 
+  <!-- CHEVAL -->
   <section id="cheval">
     <div class="sec-head"><h2>Balades à cheval</h2><div class="rule"></div></div>
+    <p class="sec-hint">Optionnel &mdash; à cocher si vous voulez l'ajouter au total</p>
     <div class="grid g2">
-      <article class="card">
+      <article class="card selectable" data-price="40" data-label="Balade à cheval — Rancho Bonanza" data-optional="true">
+        <div class="check"><svg width="13" height="13" viewBox="0 0 16 16"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.75.75 0 0 1 1.06-1.06L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/></svg></div>
+        <p class="addon-note">Activité en plus</p>
         <p class="kicker">Rancho Bonanza</p>
         <h3>Parcours et tarifs</h3>
+        <p class="price">40 <small>euros</small></p>
         <p class="body"></p>
-        <a class="btn" href="https://www.ranchobonanza.es/english-1/routes-and-prices/" target="_blank" rel="noopener">Voir les parcours
+        <button class="btn pick toggle-cheval" type="button">Ajouter</button>
+        <a class="btn ghost" style="margin-top:12px" href="https://www.ranchobonanza.es/english-1/routes-and-prices/" target="_blank" rel="noopener">Voir les parcours
           <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8.22 2.97a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06l2.97-2.97H2.75a.75.75 0 0 1 0-1.5h8.44L8.22 4.03a.75.75 0 0 1 0-1.06Z"/></svg>
         </a>
       </article>
@@ -403,6 +530,92 @@ footer{padding:64px 0 88px;border-top:1px solid var(--edge);margin-top:40px}
     <span>Islas Canarias &middot; 28°16′N 16°36′W</span>
   </div>
 </footer>
+
+<!-- ══ SUMMARY BAR ══ -->
+<div class="summary">
+  <div class="summary-in">
+    <div class="summary-progress">
+      <span class="dot" data-dot="aller"></span> Aller
+      <span class="dot" data-dot="voiture"></span> Voiture
+      <span class="dot" data-dot="logement"></span> Logement
+    </div>
+    <div class="summary-fill"></div>
+    <div class="summary-block">
+      <span class="summary-label">Total (3 pers.)</span>
+      <span class="summary-value accent" id="total-all">0 €</span>
+    </div>
+    <div class="summary-sep"></div>
+    <div class="summary-block">
+      <span class="summary-label">Par personne</span>
+      <span class="summary-value" id="total-pp">0 €</span>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var PEOPLE = 3;
+  var cards = document.querySelectorAll('.card.selectable');
+  var totalAllEl = document.getElementById('total-all');
+  var totalPpEl  = document.getElementById('total-pp');
+
+  function recalc(){
+    var total = 0;
+    var groupsFilled = {aller:false, voiture:false, logement:false};
+
+    cards.forEach(function(card){
+      if(card.classList.contains('selected')){
+        total += parseFloat(card.dataset.price || 0);
+        var group = card.closest('[data-group]');
+        if(group) groupsFilled[group.dataset.group] = true;
+      }
+    });
+
+    totalAllEl.textContent = total.toLocaleString('fr-FR') + ' €';
+    totalPpEl.textContent = Math.round(total / PEOPLE).toLocaleString('fr-FR') + ' €';
+
+    Object.keys(groupsFilled).forEach(function(g){
+      var dot = document.querySelector('.dot[data-dot="'+g+'"]');
+      if(dot) dot.classList.toggle('on', groupsFilled[g]);
+    });
+  }
+
+  cards.forEach(function(card){
+    var btn = card.querySelector('.btn.pick');
+    var isOptional = card.dataset.optional === 'true';
+
+    btn.addEventListener('click', function(){
+      if(isOptional){
+        // toggle add-on: doesn't deselect siblings
+        var nowSelected = !card.classList.contains('selected');
+        card.classList.toggle('selected', nowSelected);
+        btn.classList.toggle('is-selected', nowSelected);
+        btn.textContent = nowSelected ? 'Ajouté ✓' : 'Ajouter';
+      } else {
+        var group = card.closest('[data-group]');
+        var siblings = group ? group.querySelectorAll('.card.selectable') : [card];
+        var wasSelected = card.classList.contains('selected');
+
+        siblings.forEach(function(sib){
+          sib.classList.remove('selected');
+          var sBtn = sib.querySelector('.btn.pick');
+          sBtn.classList.remove('is-selected');
+          sBtn.textContent = 'Choisir';
+        });
+
+        if(!wasSelected){
+          card.classList.add('selected');
+          btn.classList.add('is-selected');
+          btn.textContent = 'Sélectionné ✓';
+        }
+      }
+      recalc();
+    });
+  });
+
+  recalc();
+})();
+</script>
 
 </body>
 </html>
