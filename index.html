@@ -276,6 +276,18 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--sun);outline-offset
 }
 .addon-note::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--sun)}
 
+/* ══ NOTES ══ */
+.notes-list{list-style:none;display:flex;flex-direction:column;gap:14px}
+.notes-list li{
+  position:relative;padding-left:22px;color:var(--ash);font-size:15.5px;
+}
+.notes-list li::before{
+  content:"";position:absolute;left:0;top:9px;width:7px;height:7px;border-radius:50%;background:var(--sea);
+}
+.notes-list li strong{color:var(--foam);font-weight:600}
+.notes-list li a{color:var(--sea);text-decoration:none;border-bottom:1px solid var(--sea-deep)}
+.notes-list li a:hover{color:var(--foam);border-color:var(--foam)}
+
 /* ══ FOOT ══ */
 footer{padding:64px 0 40px;border-top:1px solid var(--edge);margin-top:40px}
 .foot{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;color:var(--ash);font-family:"JetBrains Mono",monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase}
@@ -360,6 +372,7 @@ footer{padding:64px 0 40px;border-top:1px solid var(--edge);margin-top:40px}
     <a href="#voiture">Location voiture</a>
     <a href="#logement">Logement</a>
     <a href="#cheval">Balades à cheval</a>
+    <a href="#notes">Notes</a>
   </div>
 </nav>
 
@@ -487,6 +500,21 @@ footer{padding:64px 0 40px;border-top:1px solid var(--edge);margin-top:40px}
         </a>
       </article>
 
+      <article class="card selectable" data-price="630" data-label="Logement — Oasic Park + Juana's House">
+        <div class="check"><svg width="13" height="13" viewBox="0 0 16 16"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.75.75 0 0 1 1.06-1.06L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/></svg></div>
+        <p class="kicker">Adeje &middot; Puerto de la Cruz</p>
+        <h3>Oasic Park (3 nuits) + Juana's House (7 nuits)</h3>
+        <p class="price">630 <small>euros</small></p>
+        <p class="body">Deux logements pour changer de coin en cours de séjour : Oasic Park à Adeje puis Juana's House à Puerto de la Cruz.</p>
+        <button class="btn pick" type="button">Choisir</button>
+        <a class="btn ghost" style="margin-top:12px" href="https://www.booking.com/hotel/es/detail-oasic-park.fr.html" target="_blank" rel="noopener">Oasic Park (Adeje)
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8.22 2.97a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06l2.97-2.97H2.75a.75.75 0 0 1 0-1.5h8.44L8.22 4.03a.75.75 0 0 1 0-1.06Z"/></svg>
+        </a>
+        <a class="btn ghost" style="margin-top:8px" href="https://www.booking.com/hotel/es/juanas-house.fr.html" target="_blank" rel="noopener">Juana's House (Puerto de la Cruz)
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8.22 2.97a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06l2.97-2.97H2.75a.75.75 0 0 1 0-1.5h8.44L8.22 4.03a.75.75 0 0 1 0-1.06Z"/></svg>
+        </a>
+      </article>
+
       <article class="card selectable" data-price="493" data-label="Logement — La Yourte">
         <div class="check"><svg width="13" height="13" viewBox="0 0 16 16"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.75.75 0 0 1 1.06-1.06L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/></svg></div>
         <p class="kicker">Insolite</p>
@@ -521,6 +549,46 @@ footer{padding:64px 0 40px;border-top:1px solid var(--edge);margin-top:40px}
         </a>
       </article>
       <div></div>
+    </div>
+  </section>
+
+  <!-- NOTES -->
+  <section id="notes">
+    <div class="sec-head"><h2>Notes</h2><div class="rule"></div></div>
+    <p class="sec-hint">Idées et bons plans en vrac</p>
+    <div class="grid g3">
+
+      <article class="card">
+        <p class="kicker">Bouffe &amp; randos</p>
+        <h3>À faire</h3>
+        <ul class="notes-list">
+          <li><strong>Nourriture :</strong> manger dans les guachinches, restos traditionnels canariens, repas + vin pour moins de 10 euros, ultra pas cher et délicieux.</li>
+          <li><strong>Teide :</strong> réserver les accès au volcan sur <a href="https://tenerifeon.es" target="_blank" rel="noopener">tenerifeon.es</a>. Durée de la rando : 1 journée entière.</li>
+          <li><strong>Autres idées de randos :</strong> le parc rural d'Anaga, très vert et très "jungle".</li>
+          <li><strong>Observation des baleines :</strong> acantilados de los gigantes.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <p class="kicker">Sortir dehors</p>
+        <h3>Bars &amp; clubs</h3>
+        <ul class="notes-list">
+          <li><strong>Playa de las Americas :</strong> Av. Rafael Puig Lluvina et Av. Arquitecto Gómez Cuesta (clubs jusqu'à 6h).</li>
+          <li><strong>Los Cristianos :</strong> King of Judah Reggae Bar.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <p class="kicker">Fêtes locales &amp; festivals</p>
+        <h3>À ne pas rater</h3>
+        <ul class="notes-list">
+          <li>Penser à acheter un Mago là-bas.</li>
+          <li><strong>29 août :</strong> fête du saint patron d'Arafo — <a href="https://www.wonderfultenerife.com/fr/article/show/517/arafo-romeria-de-san-agustin" target="_blank" rel="noopener">wonderfultenerife.com</a>.</li>
+          <li><strong>30 août :</strong> romeria de San Roque, Vilaflor — <a href="https://www.salutilescanaries.com/evenements/tenerife/romeria-de-vilaflor-de-chasna/" target="_blank" rel="noopener">salutilescanaries.com</a>.</li>
+          <li><strong>Les Rastros (marchés aux puces) :</strong> le marché aux puces du dimanche à Santa Cruz de Tenerife.</li>
+        </ul>
+      </article>
+
     </div>
   </section>
 
